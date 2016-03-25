@@ -1,13 +1,8 @@
 var ModelFactory = require("./Model/ModelFactory")
+var SocketIO = require("socket.io")()
+var eventHandler = require("./EventHandler")
 
-// ModelFactory.user.create({
-// 	name: "Lucas",
-// 	email: "lucas.barbosa@berkeley.edu",
-// 	password: "password"
-// }).then(function(user) {
-// 	user.getItems().then(function(items) {
-// 		items.forEach(function(item) {
-// 			console.log(item)
-// 		})
-// 	})
-// })
+eventHandler(SocketIO)
+
+SocketIO.listen(3000)
+console.log("Server is now listening on *:3000")

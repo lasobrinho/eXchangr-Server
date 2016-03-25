@@ -17,10 +17,11 @@ Chat.hasMany(Message)
 
 User.hasMany(BlockedUser)
 User.hasOne(Location)
+User.hasOne(Statistic)
 User.hasMany(Item)
 User.hasMany(Reaction)
 User.hasMany(Message)
-User.hasMany(Statistic)
+
 
 var createDB = require("./CreateDB")
 createDB()
