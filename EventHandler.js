@@ -1,20 +1,39 @@
+var Events = require("./CommunicationAPI/Events")
 var User = require("./Model/ModelFactory").user
 
+
+var ServerEvents = Events.ServerEvents
+var ClientEvents = Events.ClientEvents
+
 module.exports = function(io) {
-	io.on("connection", function (socket){
-		socket.on("PerformUserRegistration", function(newUserData) {
-			User.create({
-				name: newUserData["name"],
-				email: newUserData["email"],
-				password: newUserData["password"]
-			}).then(function(createdUser) {
-				socket.emit("SuccessfulUserRegister", createdUser)
+	io.on(Events.connection, function (socket){
+
+		socket.on(ClientEvents.PerformUserRegistration, function(newUserData) {
+			User.findOne({where: {email: newUserData["email"]}}).then(function(existingUser) {
+				if(!existingUser) {
+					User.create({
+						name: newUserData.name,
+						email: newUserData.email,
+						password: newUserData.password
+					}).then(function(createdUser) {
+						if(createdUser) {
+							socket.emit(ServerEvents.UserRegistrationResponse, {
+								responseCode: 1, //success
+								user: createdUser
+							})
+						}
+					})
+				} else {
+					socket.emit(ServerEvents.UserRegistrationResponse, {
+						responseCode: 0, //failure
+						failureReason: "User already exists"
+					})
+				}
 			})
 		})
 
 
-		socket.on("PerformUserLogin", function(userCredentials) {
-			console.log(userCredentials)
+		socket.on(ClientEvents.PerformUserLogin, function(userCredentials) {
 			User.findOne({
 			 	where: {
 					email: userCredentials.email,
@@ -22,7 +41,15 @@ module.exports = function(io) {
 				}
 			}).then(function(user) {
   				if(user) {
-  					socket.emit("SuccessfulUserLogin", user.get())
+  					socket.emit(ServerEvents.UserLoginResponse, {
+  						responseCode: 1, //success
+  						user: user.get()
+  					})
+  				} else {
+  					socket.emit(ServerEvents.UserLoginResponse, {
+  						responseCode: 0, //failure
+  						failureReason: "Wrong credentials"
+  					})
   				}
 			})
 		})
