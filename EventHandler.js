@@ -2,18 +2,18 @@ var User = require("./Model/ModelFactory").user
 
 module.exports = function(io) {
 	io.on("connection", function (socket){
-		socket.on("registerUser", function(newUserData) {
+		socket.on("PerformUserRegistration", function(newUserData) {
 			User.create({
 				name: newUserData["name"],
 				email: newUserData["email"],
 				password: newUserData["password"]
 			}).then(function(createdUser) {
-				socket.emit("userCreatedSuccessfully", createdUser)
+				socket.emit("SuccessfulUserRegister", createdUser)
 			})
 		})
 
 
-		socket.on("performLogin", function(userCredentials) {
+		socket.on("PerformUserLogin", function(userCredentials) {
 			console.log(userCredentials)
 			User.findOne({
 			 	where: {
@@ -22,7 +22,7 @@ module.exports = function(io) {
 				}
 			}).then(function(user) {
   				if(user) {
-  					socket.emit("loginSuccess", user.get())
+  					socket.emit("SuccessfulUserLogin", user.get())
   				}
 			})
 		})
