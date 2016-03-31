@@ -1,17 +1,12 @@
-var Sequelize = require("sequelize")
-var Database = require("./Database")
-
-Chat = Database.define("chat", {
-	firstUserId: {
-		type: Sequelize.INTEGER,
-		allowNull: false
-	},
-	secondUserId: {
-		type: Sequelize.INTEGER,
-		allowNull: false
-	}
-})
-
-
-
-module.exports = Chat
+module.exports = function(sequelize, DataTypes) {
+    return sequelize.define("chat", {
+        firstUserId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        secondUserId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
+    })
+}

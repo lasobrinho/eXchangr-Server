@@ -2,7 +2,7 @@
   "name": "exchangr-server",
   "version": "1.0.0",
   "description": "Backend part of the eXchanger application",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

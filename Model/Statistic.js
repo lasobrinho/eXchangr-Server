@@ -1,31 +1,24 @@
-var Sequelize = require("sequelize")
-var Database = require("./Database")
-
-var Statistic = Database.define("statistic", {
-	userId: {
-		type: Sequelize.INTEGER,
-		allowNull: false
-	},
-	numberOfExchanges: {
-		type: Sequelize.INTEGER,
-		allowNull: false,
-		defaultValue: 0
-	},
-	numberOfMatches: {
-		type: Sequelize.INTEGER,
-		allowNull: false,
-		defaultValue: 0	
-	},
-	numberOfFailedExchanges: {
-		type: Sequelize.INTEGER,
-		allowNull: false,
-		defaultValue: 0
-	},
-	numberOfLikesGiven: {
-		type: Sequelize.INTEGER,
-		allowNull: false,
-		defaultValue: 0
-	}
-})
-
-module.exports = Statistic
+module.exports = function(sequelize, DataTypes) {
+    return sequelize.define("statistic", {
+        numberOfExchanges: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
+        numberOfMatches: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
+        numberOfFailedExchanges: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        },
+        numberOfLikesGiven: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0
+        }
+    })
+}

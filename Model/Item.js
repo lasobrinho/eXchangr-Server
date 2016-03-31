@@ -1,23 +1,16 @@
-var Sequelize = require("sequelize")
-var Database = require("./Database")
-
-Item = Database.define("item", {
-	name: {
-		type: Sequelize.STRING,
-		allowNull: false
-	},
-	description: {
-		type: Sequelize.TEXT,
-		allowNull: false
-	},
-	userId: {
-		type: Sequelize.INTEGER,
-		allowNull: false
-	},
-	active: {
-		type: Sequelize.BOOLEAN,
-		allowNull: false,
-	}
-})
-
-module.exports = Item
+module.exports = function(sequelize, DataTypes) {
+    return sequelize.define("item", {
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        description: {
+            type: DataTypes.TEXT,
+            allowNull: false
+        },
+        active: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        }
+    })
+}

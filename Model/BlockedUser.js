@@ -1,15 +1,8 @@
-var Sequelize = require("sequelize")
-var Database = require("./Database")
-
-var BlockedUser = Database.define("blockeduser", {
-	userId: {
-		type: Sequelize.INTEGER,
-		allowNull: false
-	},
-	blockedUserId: {
-		type: Sequelize.INTEGER,
-		allowNull: false
-	}
-})
-
-module.exports = BlockedUser
+module.exports = function(sequelize, DataTypes) {
+    return sequelize.define("blockeduser", {
+        blockedUserId: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        }
+    })
+}
