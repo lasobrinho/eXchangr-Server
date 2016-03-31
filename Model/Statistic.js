@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define("statistic", {
+    return sequelize.define('statistic', {
         numberOfExchanges: {
             type: DataTypes.INTEGER,
             allowNull: false,

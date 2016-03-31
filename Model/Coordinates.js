@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define("coordinates", {
+    return sequelize.define('coordinates', {
         latitude: {
             type: DataTypes.DOUBLE,
             allowNull: false
