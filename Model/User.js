@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
         },
         reputation: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DOUBLE,
             allowNull: false,
             defaultValue: 0
         },
