@@ -1,4 +1,4 @@
-events = require('./userAuthenticationEvents')
+var events = require('./userAuthenticationEvents')
 
 module.exports = {
     bindEvents: function(socket, database) {

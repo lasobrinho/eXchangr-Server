@@ -1,4 +1,4 @@
-events = require('./UserRegistrationEvents')
+var events = require('./UserRegistrationEvents')
 
 module.exports = {
     bindEvents: function(socket, database) {

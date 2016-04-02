@@ -1,4 +1,4 @@
 module.exports = {
-    request: 'userAuthentication',
-    response: 'userAuthenticationResponse'
+    in: 'userAuthentication',
+    out: 'userAuthenticationResponse'
 }

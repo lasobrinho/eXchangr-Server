@@ -1,4 +1,4 @@
 module.exports = {
-    request: 'itemAddition',
-    response: 'itemAdditionResponse'
+    in: 'itemAddition',
+    out: 'itemAdditionResponse'
 }
