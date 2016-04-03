@@ -1,5 +1,4 @@
-require('./Database/Database')
-.sync()
+require('./Database/Database').sync()
 .then(function(database) {
     var SocketIOServer = require('socket.io')()
     var MainEventHandler = require('./MainEventHandler')

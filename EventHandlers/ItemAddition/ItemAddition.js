@@ -1,7 +1,7 @@
 var events = require('./ItemAdditionEvents')
 
 module.exports = {
-    bindEvents: function(socket, database) {
+    bindEvents: function(socket, database, responseCodes) {
         var Item = database.models.item
         var User = database.models.user
         socket.on(events.in, function(data) {
@@ -14,17 +14,26 @@ module.exports = {
                     }).then(function(item) {
                         user.addItem(item)
                         socket.emit(events.out, {
-                            responseCode: 0,
+                            responseCode: responseCodes.success,
                             item: item
                         })
                     }).catch(function(error) {
-                        console.log(error.message)
+                        socket.emit(events.out, {
+                            responseCode: responseCodes.internalError,
+                            message: error.message
+                        })
                     })
                 } else {
-                    console.log('User does not exist')
+                    socket.emit(events.out, {
+                        responseCode: responseCodes.internalError,
+                        message: 'User does not exist.'
+                    })
                 }
             }).catch(function(error) {
-                console.log(error.message)
+                socket.emit(events.out, {
+                    responseCode: responseCodes.internalError,
+                    message: 'Error fetching user.'
+                })
             })
         })
     }
