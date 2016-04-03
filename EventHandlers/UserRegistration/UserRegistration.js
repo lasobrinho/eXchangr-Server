@@ -11,7 +11,9 @@ module.exports = {
             }).then(function(user) {
                 socket.emit(events.out, {
                     responseCode: responseCodes.success,
-                    user: user
+                    user: user.get({
+                        plain: true
+                    })
                 })
             }).catch(function(error) {
                 socket.emit(events.out, {

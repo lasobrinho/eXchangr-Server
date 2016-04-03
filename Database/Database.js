@@ -1,15 +1,17 @@
 var Sequelize = require('sequelize')
-var database = new Sequelize('eXchangr', 'root', 'root')
+var database = new Sequelize('eXchangr', 'root', 'root', {
+    logging: false
+})
 
-BlockedUser = database.import(__dirname + '/../Model/BlockedUser')
-Chat = database.import(__dirname + '/../Model/Chat')
-Item = database.import(__dirname + '/../Model/Item')
-Coordinates = database.import(__dirname + '/../Model/Coordinates')
-Message = database.import(__dirname + '/../Model/Message')
-Picture = database.import(__dirname + '/../Model/Picture')
-Reaction = database.import(__dirname + '/../Model/Reaction')
-Statistic = database.import(__dirname + '/../Model/Statistic')
-User = database.import(__dirname + '/../Model/User')
+var BlockedUser = database.import(__dirname + '/../Model/BlockedUser')
+var Chat = database.import(__dirname + '/../Model/Chat')
+var Item = database.import(__dirname + '/../Model/Item')
+var Coordinates = database.import(__dirname + '/../Model/Coordinates')
+var Message = database.import(__dirname + '/../Model/Message')
+var Picture = database.import(__dirname + '/../Model/Picture')
+var Reaction = database.import(__dirname + '/../Model/Reaction')
+var Statistic = database.import(__dirname + '/../Model/Statistic')
+var User = database.import(__dirname + '/../Model/User')
 
 User.hasMany(BlockedUser)
 User.hasMany(Item)

@@ -13,11 +13,13 @@ module.exports = {
                 if (user) {
                     socket.emit(events.out, {
                         responseCode: responseCodes.success,
-                        user: user
+                        user: user.get({
+                            plain: true
+                        })
                     })
                 } else {
                     socket.emit(events.out, {
-                        responseCode: responseCode.permissionDenied,
+                        responseCode: responseCodes.permissionDenied,
                         message: 'Wrong Credentials.'
                     })
                 }

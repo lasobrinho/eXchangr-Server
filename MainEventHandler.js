@@ -1,7 +1,9 @@
-UserRegistration = require('./EventHandlers/UserRegistration/UserRegistration')
-UserAuthentication = require('./EventHandlers/UserAuthentication/UserAuthentication')
-ItemAddition = require('./EventHandlers/ItemAddition/ItemAddition')
-ResponseCodes = require('./ResponseCodes')
+var ResponseCodes = require('./ResponseCodes')
+
+var UserRegistration = require('./EventHandlers/UserRegistration/UserRegistration')
+var UserAuthentication = require('./EventHandlers/UserAuthentication/UserAuthentication')
+var ItemAddition = require('./EventHandlers/ItemAddition/ItemAddition')
+
 
 module.exports = {
     bindEvents: function(server, database) {

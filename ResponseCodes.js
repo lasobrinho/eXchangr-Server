@@ -1,5 +1,5 @@
-module.exports {
+module.exports = {
     success: 0,
     internalError: 1,
-    permissionDenied: 2,
+    permissionDenied: 2
 }
