@@ -1,7 +1,7 @@
 var events = require('./userAuthenticationEvents')
 
 module.exports = {
-    bindEvents: function(socket, database, responseCodes) {
+    bindEvents: function(socket, database, responseCodes, Error) {
         var User = database.models.user
         socket.on(events.in, function(data) {
             User.find({
@@ -18,10 +18,7 @@ module.exports = {
                         })
                     })
                 } else {
-                    socket.emit(events.out, {
-                        responseCode: responseCodes.permissionDenied,
-                        message: 'Wrong Credentials.'
-                    })
+                    throw new ValidationError('Access Denied')
                 }
             }).catch(function(error) {
                 socket.emit(events.out, {

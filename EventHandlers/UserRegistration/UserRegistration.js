@@ -1,7 +1,7 @@
 var events = require('./UserRegistrationEvents')
 
 module.exports = {
-    bindEvents: function(socket, database, responseCodes) {
+    bindEvents: function(socket, database, responseCodes, Error) {
         var User = database.models.user
         socket.on(events.in, function(data) {
             User.create({

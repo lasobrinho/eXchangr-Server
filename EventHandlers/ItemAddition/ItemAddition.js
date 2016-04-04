@@ -1,7 +1,7 @@
 var events = require('./ItemAdditionEvents')
 
 module.exports = {
-    bindEvents: function(socket, database, responseCodes) {
+    bindEvents: function(socket, database, responseCodes, Error) {
         var Item = database.models.item
         var Picture = database.models.picture
 

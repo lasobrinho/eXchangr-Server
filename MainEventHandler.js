@@ -6,11 +6,11 @@ var ItemAddition = require('./EventHandlers/ItemAddition/ItemAddition')
 
 
 module.exports = {
-    bindEvents: function(server, database) {
+    bindEvents: function(server, database, Error) {
         server.on('connection', function(socket) {
-			UserRegistration.bindEvents(socket, database, ResponseCodes)
-            UserAuthentication.bindEvents(socket, database, ResponseCodes)
-            ItemAddition.bindEvents(socket, database, ResponseCodes)
+			UserRegistration.bindEvents(socket, database, ResponseCodes, Error)
+            UserAuthentication.bindEvents(socket, database, ResponseCodes, Error)
+            ItemAddition.bindEvents(socket, database, ResponseCodes, Error)
         })
     }
 }
