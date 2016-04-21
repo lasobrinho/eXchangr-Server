@@ -3,7 +3,7 @@ var ResponseCodes = require('./ResponseCodes')
 var UserRegistration = require('./EventHandlers/UserRegistration/UserRegistration')
 var UserAuthentication = require('./EventHandlers/UserAuthentication/UserAuthentication')
 var ItemAddition = require('./EventHandlers/ItemAddition/ItemAddition')
-
+var ItemBrowsing = require('./EventHandlers/ItemBrowsing/ItemBrowsing')
 
 module.exports = {
     bindEvents: function(server, database, Error) {
@@ -11,6 +11,7 @@ module.exports = {
 			UserRegistration.bindEvents(socket, database, ResponseCodes, Error)
             UserAuthentication.bindEvents(socket, database, ResponseCodes, Error)
             ItemAddition.bindEvents(socket, database, ResponseCodes, Error)
+            ItemBrowsing.bindEvents(socket, database, ResponseCodes, Error)
         })
     }
 }

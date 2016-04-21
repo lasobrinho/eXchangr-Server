@@ -7,7 +7,8 @@ module.exports = {
             User.create({
                 name: data.user.name,
                 email: data.user.email,
-                password: data.user.password
+                password: data.user.password,
+                phone: data.user.phone
             }).then(function(user) {
                 socket.emit(events.out, {
                     responseCode: responseCodes.success,

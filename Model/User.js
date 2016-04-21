@@ -13,6 +13,10 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
+        phone: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         reputation: {
             type: DataTypes.DOUBLE,
             allowNull: false,
