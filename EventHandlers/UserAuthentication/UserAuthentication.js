@@ -18,7 +18,7 @@ module.exports = {
                         })
                     })
                 } else {
-                    throw new ValidationError('Access Denied')
+                    throw new Error('Access Denied')
                 }
             }).catch(function(error) {
                 socket.emit(events.out, {

@@ -1,5 +1,5 @@
 var Error  = require("sequelize").ValidationError
-require('./Database/Database').sync({force: true})
+require('./Database/Database').sync()
 .then(function(database) {
     var SocketIOServer = require('socket.io')()
     var MainEventHandler = require('./MainEventHandler')

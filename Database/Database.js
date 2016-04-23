@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize')
 var database = new Sequelize('eXchangr', 'root', 'root', {
-    logging: false
+    // logging: false
 })
 
 var BlockedUser = database.import(__dirname + '/../Model/BlockedUser')
@@ -28,5 +28,7 @@ Chat.hasMany(Message)
 
 Message.belongsTo(Chat)
 Message.belongsTo(User)
+
+Reaction.belongsTo(User)
 
 module.exports = database
