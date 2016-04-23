@@ -45,7 +45,7 @@ module.exports = {
                     }
                 }).then(function(eligibleItems) {
                     socket.emit(events.out, {
-                        data: JSON.stringify(eligibleItems),
+                        items: JSON.stringify(eligibleItems),
                         responseCode: responseCodes.success
                     })
                 })
