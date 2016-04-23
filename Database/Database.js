@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize')
 var database = new Sequelize('eXchangr', 'root', 'root', {
-    // logging: false
+    logging: false
 })
 
 var BlockedUser = database.import(__dirname + '/../Model/BlockedUser')

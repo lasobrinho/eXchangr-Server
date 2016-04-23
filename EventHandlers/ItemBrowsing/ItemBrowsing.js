@@ -7,7 +7,6 @@ module.exports = {
         var Item = database.models.item
         var Picture = database.models.picture
         var Reaction = database.models.reaction
-
         socket.on(events.in, function(data) {
             User.findById(data.user.id, {
                 include: Coordinates
@@ -16,30 +15,39 @@ module.exports = {
                     include: [
                         {
                             model: Reaction,
-                            required:  false
+                            required:  false,
                         },
                         {
                             model: Picture
+                        },
+                        {
+                            model: User,
+                            attributes: ['id'],
+                            include: [{
+                                model: Coordinates,
+                                attributes: ['latitude', 'longitude']
+                            }]
                         }
                     ],
                     where: {
-                        userId: {
-                            $ne: data.user.id
-                        }
-                    }
-                }).then(function(desiredItems) {
-                    var items = []
-                    desiredItems.forEach(function(desiredItem) {
-                        var desired = true
-                        for (var i=0; i < desiredItem.reactions.length; i++) {
-                            if (desiredItem.reactions[i].userId == user.id) {
-                                desired = false
-                                break
+                        $and: [
+                            {
+                                userId: {
+                                    $ne: data.user.id
+                                }
+                            },
+                            {
+                                '$reactions.userId$': {
+                                    $ne: data.user.id
+                                }
                             }
-                        }
-                        items.push(desiredItem.get({plain: true}))
+                        ]
+                    }
+                }).then(function(eligibleItems) {
+                    socket.emit(events.out, {
+                        data: JSON.stringify(eligibleItems),
+                        responseCode: responseCodes.success
                     })
-                    socket.emit(events.out, items)
                 })
             }).catch(function(error) {
                 console.log(error.message)
