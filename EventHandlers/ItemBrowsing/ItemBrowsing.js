@@ -8,9 +8,11 @@ module.exports = {
         var Picture = database.models.picture
         var Reaction = database.models.reaction
         socket.on(events.in, function(data) {
+            var auth_user = null
             User.findById(data.user.id, {
                 include: Coordinates
             }).then(function(user) {
+                auth_user = user
                 Item.findAll({  
                     include: [
                         {
@@ -45,7 +47,7 @@ module.exports = {
                     }
                 }).then(function(eligibleItems) {
                     socket.emit(events.out, {
-                        items: JSON.stringify(eligibleItems),
+                        items: eligibleItems,
                         responseCode: responseCodes.success
                     })
                 })
