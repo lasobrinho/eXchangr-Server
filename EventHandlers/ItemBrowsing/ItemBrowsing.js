@@ -12,47 +12,57 @@ module.exports = {
             User.findById(data.user.id, {
                 include: Coordinates
             }).then(function(user) {
-                auth_user = user
-                Item.findAll({  
-                    include: [
-                        {
-                            model: Reaction,
-                            required:  false,
-                        },
-                        {
-                            model: Picture
-                        },
-                        {
-                            model: User,
-                            attributes: ['id'],
-                            include: [{
-                                model: Coordinates,
-                                attributes: ['latitude', 'longitude']
-                            }]
-                        }
-                    ],
-                    where: {
-                        $and: [
+                if (user != null) {
+                    auth_user = user
+                    Item.findAll({  
+                        include: [
                             {
-                                userId: {
-                                    $ne: data.user.id
-                                }
+                                model: Reaction,
+                                required:  false,
                             },
                             {
-                                '$reactions.userId$': {
-                                    $ne: data.user.id
-                                }
+                                model: Picture
+                            },
+                            {
+                                model: User,
+                                attributes: ['id'],
+                                include: [{
+                                    model: Coordinates,
+                                    attributes: ['latitude', 'longitude']
+                                }]
                             }
-                        ]
-                    }
-                }).then(function(eligibleItems) {
-                    socket.emit(events.out, {
-                        items: eligibleItems,
-                        responseCode: responseCodes.success
+                        ],
+                        where: {
+                            $and: [
+                                {
+                                    userId: {
+                                        $ne: data.user.id
+                                    }
+                                },
+                                {
+                                    '$reactions.userId$': {
+                                        $ne: data.user.id
+                                    }
+                                }
+                            ]
+                        }
+                    }).then(function(eligibleItems) {
+                        socket.emit(events.out, {
+                            items: eligibleItems,
+                            responseCode: responseCodes.success
+                        })
                     })
-                })
+                } else {
+                    socket.emit(events.out, {
+                        responseCode: responseCodes.permissionDenied,
+                        message: "Permission Denied"
+                    })
+                }
             }).catch(function(error) {
-                console.log(error.message)
+                socket.emit(events.out, {
+                    responseCode: responseCodes.internalError,
+                    message: error.message
+                })
             })
         })
     }
