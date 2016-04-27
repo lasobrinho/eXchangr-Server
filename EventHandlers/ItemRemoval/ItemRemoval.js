@@ -9,7 +9,7 @@ module.exports = {
                 if (user != null) {
                     Item.findById(data.item.id).then(function(toDeleteItem) {
                         if (toDeleteItem != null) {
-                            toDeleteItem.destroy({force: true})
+                            toDeleteItem.destroy()
                             socket.emit(events.out, {
                                 responseCode: responseCodes.success
                             })
