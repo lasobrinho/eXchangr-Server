@@ -1,4 +1,4 @@
-var events = require('./ItemEvents')
+var events = require('./ItemRemovalEvents')
 
 module.exports = {
     bindEvents: function(socket, database, responseCodes, Error) {
