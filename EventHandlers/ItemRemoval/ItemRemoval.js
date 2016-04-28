@@ -9,10 +9,11 @@ module.exports = {
                 if (user != null) {
                     Item.findById(data.item.id).then(function(toDeleteItem) {
                         if (toDeleteItem != null) {
-                            toDeleteItem.destroy()
-                            socket.emit(events.out, {
-                                responseCode: responseCodes.success
-                            })
+                            toDeleteItem.destroy().then() {
+                                socket.emit(events.out, {
+                                    responseCode: responseCodes.success
+                                })
+                            }
                         } else {
                             throw Error("Could not find item")
                         }
