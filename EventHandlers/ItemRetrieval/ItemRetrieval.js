@@ -6,9 +6,17 @@ module.exports = {
         socket.on(events.in, function(data) {
             User.findById(data.user.id).then(function(user) {
                 if (user != null) {
-                    socket.emit(events.out, {
-                        responseCode: responseCodes.success,
-                        items: user.getItems()
+                    user.getItems({
+                        include: database.models.picture
+                    }).then(function(userItems) {
+                        var result = []
+                        userItems.forEach(function(userItem) {
+                            result.push(userItem.get({plain: true}))
+                        })
+                        socket.emit(events.out, {
+                            responseCode: responseCodes.success,
+                            items: result
+                        })
                     })
                 } else {
                     socket.emit(events.out, {
