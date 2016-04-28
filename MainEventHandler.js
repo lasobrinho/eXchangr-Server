@@ -5,6 +5,7 @@ var UserAuthentication = require('./EventHandlers/UserAuthentication/UserAuthent
 var ItemAddition = require('./EventHandlers/ItemAddition/ItemAddition')
 var ItemBrowsing = require('./EventHandlers/ItemBrowsing/ItemBrowsing')
 var ItemRemoval = require('./EventHandlers/ItemRemoval/ItemRemoval')
+var ItemRetrieval = require('./EventHandlers/ItemRetrieval/ItemRetrieval')
 
 module.exports = {
     bindEvents: function(server, database, Error) {
@@ -14,6 +15,7 @@ module.exports = {
             ItemAddition.bindEvents(socket, database, ResponseCodes, Error)
             ItemBrowsing.bindEvents(socket, database, ResponseCodes, Error)
             ItemRemoval.bindEvents(socket, database, ResponseCodes, Error)
+            ItemRetrieval.bindEvents(socket, database, ResponseCodes, Error)
         })
     }
 }
