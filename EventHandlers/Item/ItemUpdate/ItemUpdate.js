@@ -9,27 +9,31 @@ module.exports = {
         socket.on(events.in, function(data) {
             User.findById(data.user.id).then(function(user) {
                 if (user != null) {
-                    Item.findById(data.item.id).then(function(item) {
-                        if (item != null) {
-                            item.update({
+                    Item.findById(data.item.id).then(function(itemToUpdate) {
+                        if (itemToUpdate != null) {
+                            itemToUpdate.update({
                                 name: data.item.name,
                                 description: data.item.description,
                                 active: data.item.active
-                            }).then(function() {
-                                item.getPictures().then(function(pictures) {
+                            }).then(function(updatedItem) {
+                                updatedItem.getPictures().then(function(pictures) {
                                     pictures.forEach(function(picture) {
                                         picture.destroy()
                                     })
 
+                                    var newPictures = []
+
                                     data.item.pictures.forEach(function(picture) {
-                                        Picture.create(picture).then(function(newPicture) {
-                                            item.addPicture(newPicture)
+                                        var newPicture = {bytes: picture.bytes, itemId: updatedItem.get().id}
+                                        newPictures.push(newPicture)
+                                    })
+                                    console.log(newPictures.length)
+
+                                    Picture.bulkCreate(newPictures).then(function() {
+                                        socket.emit(events.out, {
+                                            responseCode: 0
                                         })
                                     })
-                                })
-                            }).then(function() {
-                                socket.emit(events.out, {
-                                    responseCode: 0
                                 })
                             })
                         } else {
