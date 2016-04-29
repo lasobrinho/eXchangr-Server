@@ -7,6 +7,7 @@ var ItemBrowsing = require('./EventHandlers/ItemBrowsing/ItemBrowsing')
 var ItemRemoval = require('./EventHandlers/ItemRemoval/ItemRemoval')
 var ItemRetrieval = require('./EventHandlers/ItemRetrieval/ItemRetrieval')
 var ItemDistance = require('./EventHandlers/ItemDistance/ItemDistance')
+var ItemUpdate = require('./EventHandlers/ItemUpdate/ItemUpdate')
 
 module.exports = {
     bindEvents: function(server, database, Error) {
@@ -18,6 +19,7 @@ module.exports = {
             ItemRemoval.bindEvents(socket, database, ResponseCodes, Error)
             ItemRetrieval.bindEvents(socket, database, ResponseCodes, Error)
             ItemDistance.bindEvents(socket, database, ResponseCodes, Error)
+            ItemUpdate.bindEvents(socket, database, ResponseCodes, Error)
         })
     }
 }
