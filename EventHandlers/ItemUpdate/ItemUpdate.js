@@ -4,7 +4,8 @@ module.exports = {
     bindEvents: function(socket, database, responseCodes, Error) {
         var User = database.models.user
         var Item = database.models.item
-        var Picture = database.models.item
+        var Picture = database.models.picture
+
         socket.on(events.in, function(data) {
             User.findById(data.user.id).then(function(user) {
                 if (user != null) {
@@ -27,7 +28,7 @@ module.exports = {
                                     })
                                 })
                             }).then(function() {
-                                emit(events.out, {
+                                socket.emit(events.out, {
                                     responseCode: 0
                                 })
                             })
