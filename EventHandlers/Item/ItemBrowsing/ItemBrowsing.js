@@ -41,14 +41,18 @@ module.exports = {
                                 },
                                 {
                                     '$reactions.userId$': {
-                                        $ne: data.user.id
+                                        $or: [{$ne: data.user.id}, null]
                                     }
                                 }
                             ]
                         }
                     }).then(function(eligibleItems) {
+                        var items = []
+                        eligibleItems.forEach(function(eligibleItem) {
+                            items.push(eligibleItem.get({plain: true}))
+                        })
                         socket.emit(events.out, {
-                            items: eligibleItems,
+                            items: items,
                             responseCode: responseCodes.success
                         })
                     })

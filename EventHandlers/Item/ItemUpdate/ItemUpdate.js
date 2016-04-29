@@ -27,7 +27,6 @@ module.exports = {
                                         var newPicture = {bytes: picture.bytes, itemId: updatedItem.get().id}
                                         newPictures.push(newPicture)
                                     })
-                                    console.log(newPictures.length)
 
                                     Picture.bulkCreate(newPictures).then(function() {
                                         socket.emit(events.out, {
