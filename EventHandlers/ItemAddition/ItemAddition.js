@@ -16,10 +16,7 @@ module.exports = {
                 include: Picture
             }).then(function(item) {
                 socket.emit(events.out, {
-                    responseCode: responseCodes.success,
-                    item: item.get({
-                        plain: true
-                    })
+                    responseCode: responseCodes.success
                 })
             }).catch(function(error) {
                 socket.emit(events.out, {
