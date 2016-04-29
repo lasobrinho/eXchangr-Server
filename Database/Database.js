@@ -14,14 +14,15 @@ var Statistic = database.import(__dirname + '/../Model/Statistic')
 var User = database.import(__dirname + '/../Model/User')
 
 User.hasMany(BlockedUser)
-User.hasMany(Item)
+User.hasMany(Item, {onDelete: 'CASCADE'})
 User.hasMany(Message)
-User.hasMany(Reaction)
-User.hasOne(Coordinates)
-User.hasOne(Statistic)
+User.hasMany(Reaction, {onDelete: 'CASCADE'})
+User.hasOne(Coordinates, {onDelete: 'CASCADE'})
+User.hasOne(Statistic, {onDelete: 'CASCADE'})
 
-Item.hasMany(Picture)
-Item.hasMany(Reaction)
+Item.hasMany(Picture, {onDelete: 'CASCADE'})
+
+Item.hasMany(Reaction, {onDelete: 'CASCADE'})
 Item.belongsTo(User)
 
 Chat.hasMany(Message)
