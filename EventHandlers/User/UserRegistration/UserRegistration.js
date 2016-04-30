@@ -20,7 +20,6 @@ module.exports = {
                 phone: data.user.phone,
                 coordinate: coordinates
             }, {include: Coordinates}).then(function(user) {
-                console.log(JSON.stringify(user))
                 socket.emit(events.out, {
                     responseCode: responseCodes.success,
                     user: user.get({
