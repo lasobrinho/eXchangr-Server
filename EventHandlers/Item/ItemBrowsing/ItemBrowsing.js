@@ -1,4 +1,7 @@
 var events = require('./ItemBrowsingEvents')
+var DistanceModule = require('../DistanceModule')
+
+var maximumDistanceInMiles = 10
 
 module.exports = {
     bindEvents: function(socket, database, responseCodes, Error) {
@@ -7,6 +10,7 @@ module.exports = {
         var Item = database.models.item
         var Picture = database.models.picture
         var Reaction = database.models.reaction
+
         socket.on(events.in, function(data) {
             var auth_user = null
             User.findById(data.user.id, {
@@ -52,8 +56,13 @@ module.exports = {
                     }).then(function(eligibleItems) {
                         var items = []
                         eligibleItems.forEach(function(eligibleItem) {
-                            items.push(eligibleItem.get({plain: true}))
+                            var potentialItem = eligibleItem.get({plain: true})
+                            var distance = DistanceModule.distanceInMiles(potentialItem.user.coordinate, user.coordinate)
+                            if(distance < maximumDistanceInMiles) {
+                                items.push(potentialItem)
+                            }
                         })
+
                         socket.emit(events.out, {
                             items: items,
                             responseCode: responseCodes.success
