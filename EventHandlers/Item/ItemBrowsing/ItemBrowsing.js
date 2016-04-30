@@ -43,6 +43,9 @@ module.exports = {
                                     '$reactions.userId$': {
                                         $or: [{$ne: data.user.id}, null]
                                     }
+                                },
+                                {
+                                    active: true
                                 }
                             ]
                         }
