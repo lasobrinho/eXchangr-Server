@@ -27,7 +27,6 @@ module.exports = {
                     }).then(function(item) {
                         if (item != null) {
                             item = item.get({plain: true})
-                            console.log(item)
                             socket.emit(events.out, {
                                 responseCode: responseCodes.success,
                                 distance: DistanceModule.distanceInMiles(user.coordinate, item.user.coordinate)

@@ -2,7 +2,8 @@ var ResponseCodes = require('./ResponseCodes')
 
 var eventHandlers = [
     require('./EventHandlers/Item/ItemHandler'),
-    require('./EventHandlers/User/UserHandler')
+    require('./EventHandlers/User/UserHandler'),
+    require('./EventHandlers/Reaction/React')
 ]
 
 module.exports = {
