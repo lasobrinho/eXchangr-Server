@@ -7,14 +7,18 @@ module.exports = {
         var Reaction = database.models.reaction
 
         socket.on(events.in, function(data) {
-            Reaction.create({
-                interested: data.reaction.interested,
-                userId: data.user.id,
-                itemId: data.item.id
-            }).then(function(item) {
-                socket.emit(events.out, {
-                    responseCode: responseCodes.success
-                })
+            Item.findById(data.item.id).then(function(item) {
+                if (item != null) {
+                    Reaction.create({
+                        interested: data.reaction.interested,
+                        userId: data.user.id,
+                        itemId: data.item.id
+                    }).then(function(item) {
+                        socket.emit(events.out, {
+                            responseCode: responseCodes.success
+                        })
+                    })
+                }
             }).catch(function(error) {
                 socket.emit(events.out, {
                     responseCode: responseCodes.internalError,
