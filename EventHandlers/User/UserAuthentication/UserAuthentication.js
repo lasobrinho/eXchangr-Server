@@ -18,7 +18,7 @@ module.exports = {
                         })
                     })
                 } else {
-                    throw new Error('Access Denied')
+                    throw new Error('Wrong username or password.')
                 }
             }).catch(function(error) {
                 socket.emit(events.out, {
