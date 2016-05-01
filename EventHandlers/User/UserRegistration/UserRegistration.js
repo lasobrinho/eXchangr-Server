@@ -5,19 +5,12 @@ module.exports = {
         var User = database.models.user
         var Coordinates = database.models.coordinates
         socket.on(events.in, function(data) {
-            var coordinates = null
-            if (data.coordinate == null) {
-                coordinates = {
-                    latitude: 0,
-                    longitude: 0
-                }
-            }
             User.create({
                 name: data.user.name,
                 email: data.user.email,
                 password: data.user.password,
                 phone: data.user.phone,
-                coordinate: coordinates
+                coordinate: data.coordinate
             }, {include: Coordinates}).then(function(user) {
                 socket.emit(events.out, {
                     responseCode: responseCodes.success,
