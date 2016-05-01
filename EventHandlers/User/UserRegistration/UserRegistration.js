@@ -12,7 +12,6 @@ module.exports = {
                     longitude: 0
                 }
             }
-            console.log(coordinates)
             User.create({
                 name: data.user.name,
                 email: data.user.email,

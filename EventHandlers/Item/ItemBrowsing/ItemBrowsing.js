@@ -44,11 +44,6 @@ module.exports = {
                                     }
                                 },
                                 {
-                                    '$reactions.userId$': {
-                                        $or: [{$ne: data.user.id}, null]
-                                    }
-                                },
-                                {
                                     active: true
                                 }
                             ]
@@ -58,7 +53,13 @@ module.exports = {
                         eligibleItems.forEach(function(eligibleItem) {
                             var potentialItem = eligibleItem.get({plain: true})
                             var distance = DistanceModule.distanceInMiles(potentialItem.user.coordinate, user.coordinate)
-                            if(distance < maximumDistanceInMiles) {
+                            var shouldReturn = true
+                            potentialItem.reactions.forEach(function(reaction) {
+                                if(reaction.userId == data.user.id) {
+                                    shouldReturn = false
+                                }
+                            })
+                            if(shouldReturn && distance < maximumDistanceInMiles) {
                                 items.push(potentialItem)
                             }
                         })

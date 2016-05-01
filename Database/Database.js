@@ -31,5 +31,6 @@ Message.belongsTo(Chat)
 Message.belongsTo(User)
 
 Reaction.belongsTo(User)
+Reaction.belongsTo(Item)
 
 module.exports = database
