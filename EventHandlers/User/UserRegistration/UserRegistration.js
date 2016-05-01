@@ -6,7 +6,7 @@ module.exports = {
         var Coordinates = database.models.coordinates
         socket.on(events.in, function(data) {
             var coordinates = null
-            if (data.coordinates == null) {
+            if (data.coordinate == null) {
                 coordinates = {
                     latitude: 0,
                     longitude: 0
