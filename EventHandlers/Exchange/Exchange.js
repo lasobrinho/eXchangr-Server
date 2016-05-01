@@ -1,12 +1,30 @@
 var events = require('./ExchangeEvents')
 var DistanceModule = require('../Item/DistanceModule')
 
+function convertToArray(object) {
+    return Object.keys(object).map(function(key) {
+        return object[key]
+    })
+}
+
+function prepareExchanges(exchanges) {
+    result = []
+    exchanges = convertToArray(exchanges)
+    exchanges.forEach(function(exchange) {
+        exchange.itemsLikedByTheOtherUser = convertToArray(exchange.itemsLikedByTheOtherUser)
+        exchange.otherUserItemsThatILike = convertToArray(exchange.otherUserItemsThatILike)
+        result.push(exchange)
+    })
+    return result
+}
+
 module.exports = {
     bindEvents: function(socket, database, responseCodes, Error) {
         var User = database.models.user
         var Item = database.models.item
         var Reaction = database.models.reaction
         var Coordinates = database.models.coordinates
+        var Picture = database.models.picture
 
         socket.on(events.in, function(data) {
             User.findOne({
@@ -23,17 +41,19 @@ module.exports = {
                                 where: {
                                     active: true
                                 },
-                                include: {
+                                include: [Picture, {
                                     model: User,
-                                    attributes: ['id', 'name', 'phone'],
                                     include: [Coordinates, {
                                         model: Reaction,
                                         where: {
                                             interested: true
                                         },
-                                        include: Item
+                                        include: {
+                                            model: Item,
+                                            include: Picture
+                                        }
                                     }]
-                                }
+                                }]
                             }
                         ],
                         where: {
@@ -44,20 +64,11 @@ module.exports = {
                         var exchanges = {}
                         reactions.forEach(function(myReaction) {
                             var exchangeKey = user.id + '_' + myReaction.item.user.id
-
                             if(exchanges[exchangeKey] == null) {
                                 var otherUser = myReaction.item.user.get({plain: true})
                                 exchanges[exchangeKey] = {
-                                    otherUser: {
-                                        id: otherUser.id,
-                                        name: otherUser.name,
-                                        phone: otherUser.phone,
-                                        coordinates: {
-                                            latitude: otherUser.coordinate.latitude,
-                                            longitude: otherUser.coordinate.longitude
-                                        },
-                                        distance: DistanceModule.distanceInMiles(user.coordinate, otherUser.coordinate)
-                                    },
+                                    otherUser: otherUser,
+                                    distance: DistanceModule.distanceInMiles(user.coordinate, otherUser.coordinate),
                                     itemsLikedByTheOtherUser: {},
                                     otherUserItemsThatILike: {}
                                 }
@@ -65,17 +76,15 @@ module.exports = {
 
                             myReaction.item.user.reactions.forEach(function(otherUserReaction) {
                                 if(otherUserReaction.item.userId == user.id) {
-                                    exchanges[exchangeKey].itemsLikedByTheOtherUser[otherUserReaction.itemId] = otherUserReaction.item
-                                    exchanges[exchangeKey].otherUserItemsThatILike[myReaction.itemId] = myReaction.item
+                                    exchanges[exchangeKey].itemsLikedByTheOtherUser[otherUserReaction.itemId] = otherUserReaction.item.get({plain: true})
+                                    exchanges[exchangeKey].otherUserItemsThatILike[myReaction.itemId] = myReaction.item.get({plain: true})
                                 }
                             })
                         })
-
+                        
                         socket.emit(events.out, {
                             responseCode: 0,
-                            exchanges: Object.keys(exchanges).map(function(key) {
-                                return exchanges[key]
-                            })
+                            exchanges: prepareExchanges(exchanges)
                         })
 
                     })
