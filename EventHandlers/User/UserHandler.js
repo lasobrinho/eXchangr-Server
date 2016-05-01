@@ -1,6 +1,7 @@
 var handlers = [
 	require('./UserRegistration/UserRegistration'),
     require('./UserAuthentication/UserAuthentication'),
+    require('./UserCoordinates/UserCoordinates'),
 ]
 
 module.exports = {
