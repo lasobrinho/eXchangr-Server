@@ -1,4 +1,4 @@
 module.exports = {
-    in: 'exchange',
-    out: 'exchangeResponse'
+    in: 'exchanges',
+    out: 'exchangesResponse'
 }
